@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="angular.js"></script>
+    <script src="angular-ui-router.js"></script>
+    <!--<script src="jquery-2.2.4%20(1).js"></script>-->
+</head>
+<body>
+<clock></clock>
+</body>
+</html>
+<script>
+    //定义模块
+    var app = angular.module('qyf',['ui.router']);
+    //然后，设置启动的参数
+    app.run(function($rootScope,$state,$stateParams){
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams
+    });
+    //然后设置路由
+    app.config(['$stateProvider','$urlRouterProvider',
+        function($stateProvider,$urlRouterProvider){
+
+        }]);
+    //我们创建我们的时钟指令，完成时钟的效果
+    app.directive('clock',function(){
+        return{
+            restrict:'E',
+            replace:true,
+            template:'<h1 class="clock"></h1>',
+            link:function(scope,element,attrs){
+                //E代表以标签形式输出
+                //三个参数分别代表当前控制器的作用域、要替代的内容、clock属性
+                //将当前的时间输入到视图当中去
+                setInterval(function(){
+                    //创建当前时间
+                    var time = new Date();
+                    element.text(time.toString());
+                },1000)
+            }
+        }
+    })
+    //最后启动
+    angular.bootstrap(document,['qyf']);
+
+
+
+</script>
